@@ -1,0 +1,15 @@
+node_modules
+dist
+*.local
+.DS_Store
+Thumbs.db
+# raw source files not needed by the site
+IMG_*.MP4
+WhatsApp Image*.jpg
+
+# private documents (certificate scans with passport number, DOB) - never push
+private/
+WhatsApp Image*
+
+# old outdated CV (kept locally only)
+HAMID_CV.pdf

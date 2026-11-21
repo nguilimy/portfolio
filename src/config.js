@@ -16,7 +16,7 @@ import photoStanding from './assets/photo.jpg' // standing photo (hero)
 // ✉️ CONTACT FORM: paste your free Web3Forms access key here (see GUIDE.md, step 1).
 // While it is empty, the form falls back to opening the visitor's email app.
 export const contactForm = {
-  web3formsKey: '',
+  web3formsKey: '5a21fc04-c8d9-4422-b0d6-6428b35f0820',
 }
 
 export const theme = {

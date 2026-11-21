@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { profile } from '../config'
+import { profile, showTestimonials } from '../config'
 import { useTheme } from '../theme'
 import { Sun, Moon } from './Icons'
 import Logo from './Logo'
@@ -11,7 +11,7 @@ const links = [
   ['projects', 'Projects'],
   ['testimonials', 'Testimonials'],
   ['contact', 'Contact'],
-]
+].filter(([id]) => showTestimonials || id !== 'testimonials')
 
 export default function Navbar() {
   const [active, setActive] = useState('home')

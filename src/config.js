@@ -153,6 +153,8 @@ export const projects = [
 ]
 
 // Floating avatars in the "What Clients Say" section.
+// 👁 Hidden for now. Set to true once the quotes below are real ones.
+export const showTestimonials = false
 // ⚠ PLACEHOLDERS — replace with real quotes from teachers, classmates or clients before publishing.
 export const testimonials = [
   { initials: 'AB', name: 'Placeholder Name', role: 'Lecturer, ULK', color: '#7c3aed', quote: 'Replace this with a real quote from a lecturer or mentor.' },

@@ -11,6 +11,7 @@ import Contact from './components/Contact'
 import AvatarTraveler from './components/AvatarTraveler'
 import { useReveal } from './hooks'
 import { initSmoothScroll } from './smooth'
+import { showTestimonials } from './config'
 
 function Site() {
   useReveal()
@@ -23,7 +24,7 @@ function Site() {
         <AboutScene />
         <Expertise />
         <Projects />
-        <Testimonials />
+        {showTestimonials && <Testimonials />}
         <Contact />
       </main>
       <AvatarTraveler />

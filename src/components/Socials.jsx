@@ -1,10 +1,12 @@
 import { profile } from '../config'
-import { Github, Linkedin, Twitter } from './Icons'
+import { Github, Linkedin, Twitter, Instagram, Facebook } from './Icons'
 
 const items = [
   ['github', 'GitHub', Github],
   ['linkedin', 'LinkedIn', Linkedin],
   ['twitter', 'X / Twitter', Twitter],
+  ['instagram', 'Instagram', Instagram],
+  ['facebook', 'Facebook', Facebook],
 ]
 
 /** Social icon links — any link left empty in config.js is hidden. */

@@ -47,6 +47,8 @@ export const profile = {
     github: 'https://github.com/nguilimy',
     linkedin: 'https://www.linkedin.com/in/nguilimy-hamid-ahmat-brahim-40033b343',
     twitter: 'https://x.com/hamid_ahma59250',
+    instagram: 'https://www.instagram.com/hamidahmat_nguilimy_0727/',
+    facebook: 'https://www.facebook.com/hamid.ahmat.184',
   },
 }
 

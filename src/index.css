@@ -1116,5 +1116,18 @@ img { display: block; max-width: 100%; }
 }
 [dir='rtl'] .pc-info {
   text-align: right;
+  direction: rtl;
+}
+[dir='rtl'] .projects-label {
+  left: auto;
+  right: clamp(16px, 5vw, 64px);
+  text-align: right;
+}
+[dir='rtl'] .projects-scroll {
+  right: auto;
+  left: clamp(16px, 5vw, 64px);
+}
+[dir='rtl'] .projects-progress span {
+  transform-origin: right;
 }
 

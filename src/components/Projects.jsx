@@ -1,5 +1,6 @@
 import { forwardRef, useRef, useState } from 'react'
 import { projects } from '../config'
+import { useLanguage } from '../LanguageContext'
 import { useMediaQuery, useScrollProgress } from '../hooks'
 import { Tag } from './TechIcon'
 
@@ -20,14 +21,17 @@ function ProjectsDesktop() {
   const counter = useRef(null)
   const giants = useRef([])
   const cards = useRef([])
+  const { t } = useLanguage()
+  const isRtl = t.dir === 'rtl'
 
   useScrollProgress(wrap, (p) => {
     const pos = p * (n - 1)
-    track.current.style.transform = `translate3d(${-pos * 100}vw, 0, 0)`
+    const dirSign = document.documentElement.dir === 'rtl' ? 1 : -1
+    track.current.style.transform = `translate3d(${dirSign * pos * 100}vw, 0, 0)`
     bar.current.style.transform = `scaleX(${p})`
     counter.current.textContent = `${pad(Math.min(n, Math.round(pos) + 1))} / ${pad(n)}`
     for (let i = 0; i < n; i++) {
-      const d = i - pos
+      const d = (i - pos) * (document.documentElement.dir === 'rtl' ? -1 : 1)
       if (Math.abs(d) > 1.5) continue // off-screen: skip work
       giants.current[i].style.transform = `translate3d(${d * 12}vw, 0, 0)`
       const s = 1 - Math.min(1, Math.abs(d)) * 0.14
@@ -40,9 +44,9 @@ function ProjectsDesktop() {
       <div className="projects-sticky">
         <div className="projects-label">
           <span ref={counter}>01 / {pad(n)}</span>
-          <strong>Featured<br />Projects</strong>
+          <strong>{t.projects.title}</strong>
         </div>
-        <div className="projects-scroll">SCROLL →</div>
+        <div className="projects-scroll">{isRtl ? '← SCROLL' : 'SCROLL →'}</div>
 
         <div className="projects-track" ref={track}>
           {projects.map((pr, i) => (
@@ -64,21 +68,23 @@ function ProjectsDesktop() {
 function ProjectsMobile() {
   const [idx, setIdx] = useState(0)
   const track = useRef(null)
+  const { t } = useLanguage()
 
   const onScroll = () => {
     const el = track.current
-    const i = Math.round(el.scrollLeft / (el.scrollWidth / n))
+    const i = Math.round(Math.abs(el.scrollLeft) / (el.scrollWidth / n))
     if (i !== idx) setIdx(Math.min(n - 1, Math.max(0, i)))
   }
   const go = (i) => {
     const el = track.current
-    el.scrollTo({ left: (el.scrollWidth / n) * i, behavior: 'smooth' })
+    const sign = document.documentElement.dir === 'rtl' ? -1 : 1
+    el.scrollTo({ left: sign * (el.scrollWidth / n) * i, behavior: 'smooth' })
   }
 
   return (
     <section id="projects" className="section projects-mobile">
       <div className="section-head reveal">
-        <span className="eyebrow">— Featured Projects</span>
+        <span className="eyebrow">— {t.projects.title}</span>
         <h2 className="section-title grad-text">My Work</h2>
         <p className="section-sub pm-sub">
           <span>Swipe to explore →</span>

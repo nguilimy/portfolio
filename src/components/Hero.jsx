@@ -1,23 +1,26 @@
 import { useRef } from 'react'
 import { profile } from '../config'
+import { useLanguage } from '../LanguageContext'
 import Socials from './Socials'
 import TechIcon from './TechIcon'
 import { logoFor } from '../logos'
 
-// Floating tech logos around the portrait (x/y in %, d = animation delay, z = parallax depth)
+// Floating tech logos around the portrait
+// Positions orbit the vertical center of the stage (~50% y)
 const floaters = [
-  { n: 'React', x: -6, y: 10, d: 0, z: 14 },
-  { n: 'Python', x: 90, y: 6, d: 1.2, z: 22 },
-  { n: 'TypeScript', x: 98, y: 46, d: 0.6, z: 18 },
-  { n: 'Node.js', x: -12, y: 50, d: 1.8, z: 26 },
-  { n: 'Firebase', x: 86, y: 84, d: 2.4, z: 12 },
-  { n: 'MongoDB', x: -4, y: 86, d: 0.9, z: 20 },
-  { n: 'Docker', x: 44, y: -6, d: 1.5, z: 16 },
+  { n: 'React',      x: -8,  y: 22, d: 0,   z: 14 },
+  { n: 'Python',     x: 92,  y: 18, d: 1.2, z: 22 },
+  { n: 'TypeScript', x: 100, y: 48, d: 0.6, z: 18 },
+  { n: 'Node.js',    x: -14, y: 52, d: 1.8, z: 26 },
+  { n: 'Firebase',   x: 90,  y: 76, d: 2.4, z: 12 },
+  { n: 'MongoDB',    x: -6,  y: 78, d: 0.9, z: 20 },
+  { n: 'Docker',     x: 42,  y: -6, d: 1.5, z: 16 },
 ]
 
 export default function Hero() {
   const stage = useRef(null)
   const raf = useRef(0)
+  const { t } = useLanguage()
 
   // Mouse parallax — written straight to the DOM (no React re-render)
   const onMove = (e) => {
@@ -30,7 +33,6 @@ export default function Hero() {
       const y = ((clientY - r.top) / r.height - 0.5) * 2
       stage.current.style.setProperty('--mx', x.toFixed(3))
       stage.current.style.setProperty('--my', y.toFixed(3))
-      // tilt the floating photo (AvatarTraveler reads these)
       document.documentElement.style.setProperty('--tilt-x', x.toFixed(3))
       document.documentElement.style.setProperty('--tilt-y', y.toFixed(3))
     })
@@ -47,7 +49,7 @@ export default function Hero() {
     <section id="home" className="hero" onPointerMove={onMove} onPointerLeave={onLeave}>
       <div className="hero-text">
         <div className="pill reveal">
-          <span className="dot" /> {profile.status}
+          <span className="dot" /> {t.hero.status}
         </div>
         <h1 className="hero-name reveal d1">
           {profile.firstName}
@@ -55,15 +57,15 @@ export default function Hero() {
           <span className="grad-text">{profile.lastName}</span>
         </h1>
         <div className="hero-role reveal d2">
-          <span className="line" /> {profile.role}
+          <span className="line" /> {t.hero.role}
         </div>
-        <p className="hero-tagline reveal d3">{profile.tagline}</p>
+        <p className="hero-tagline reveal d3">{t.hero.tagline}</p>
         <div className="hero-cta reveal d4">
-          <a href="#projects" className="btn-gradient">View My Work →</a>
+          <a href="#projects" className="btn-gradient">{t.hero.viewProjects}</a>
           {profile.cv ? (
-            <a href={profile.cv} className="btn-ghost" download>Download CV ⬇</a>
+            <a href={profile.cv} className="btn-ghost" download>{t.hero.cv}</a>
           ) : (
-            <a href="#contact" className="btn-ghost">Get In Touch</a>
+            <a href="#contact" className="btn-ghost">{t.hero.contactMe}</a>
           )}
         </div>
         <Socials className="reveal d5" />

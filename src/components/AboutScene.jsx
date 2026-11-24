@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { profile, skills, projects } from '../config'
 import { useScrollProgress, range } from '../hooks'
+import { useLanguage } from '../LanguageContext'
 import TechIcon from './TechIcon'
 
 const deskItems = {
@@ -27,6 +28,7 @@ export default function AboutScene() {
   const desk = useRef(null)
   const rot = useRef({ orbit: 0, drag: 0, startX: null, startDrag: 0 })
   const [selected, setSelected] = useState('monitor')
+  const { t } = useLanguage()
 
   const applyDesk = () => {
     const { orbit, drag } = rot.current
@@ -74,7 +76,7 @@ export default function AboutScene() {
   }
   const onUp = () => { rot.current.startX = null }
 
-  const info = deskItems[selected]
+  const info = t.about.items[selected] || deskItems[selected]
 
   return (
     <section id="about" ref={wrap} className="about-wrap">
@@ -120,9 +122,9 @@ export default function AboutScene() {
           onPointerLeave={onUp}
         >
           <div className="desk-copy">
-            <span className="eyebrow">— 01 · About</span>
-            <h2>Command Center</h2>
-            <p>Tap the objects on my desk to discover my stack, my projects and my journey. Drag sideways to rotate the camera.</p>
+            <span className="eyebrow">{t.about.eyebrow}</span>
+            <h2>{t.about.title}</h2>
+            <p>{t.about.desc}</p>
             <div className="desk-info" key={selected} aria-live="polite">
               <strong>{info.title}</strong>
               <span>{info.text}</span>

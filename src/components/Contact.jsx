@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { profile, contactForm } from '../config'
+import { useLanguage } from '../LanguageContext'
 import { Mail } from './Icons'
 import Socials from './Socials'
 
@@ -8,6 +9,7 @@ const empty = { name: '', email: '', message: '', botcheck: false }
 export default function Contact() {
   const [form, setForm] = useState(empty)
   const [status, setStatus] = useState('idle') // idle | sending | sent | error
+  const { t } = useLanguage()
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.type === 'checkbox' ? e.target.checked : e.target.value })
 
   const submit = async (e) => {
@@ -45,32 +47,32 @@ export default function Contact() {
     }
   }
 
-  const label = { idle: 'Send Message →', sending: 'Sending…', sent: 'Message sent ✓', error: 'Try again →' }[status]
+  const label = { idle: t.contact.send, sending: t.contact.sending, sent: t.contact.sent, error: t.contact.error }[status]
 
   return (
     <section id="contact" className="section contact">
-      <span className="eyebrow reveal">— Contact</span>
+      <span className="eyebrow reveal">{t.contact.eyebrow}</span>
       <h2 className="contact-title reveal d1">
-        Let's build
+        {t.contact.title1}
         <br />
-        <span className="grad-text">something great.</span>
+        <span className="grad-text">{t.contact.title2}</span>
       </h2>
 
       <div className="contact-grid">
         <div className="contact-left reveal d2">
-          <p>Have a project in mind or just want to say hi? My inbox is always open. I'll get back to you within 24 hours.</p>
+          <p>{t.contact.sub}</p>
           <a className="contact-mail" href={`mailto:${profile.email}`}><Mail /> {profile.email}</a>
           <p className="contact-loc">📍 {profile.location}</p>
           <Socials />
           {profile.cv && (
-            <a className="btn-ghost contact-cv" href={profile.cv} download>⬇ Download my CV</a>
+            <a className="btn-ghost contact-cv" href={profile.cv} download>{t.contact.cvBtn}</a>
           )}
         </div>
 
         <form className="contact-form reveal d3" onSubmit={submit}>
-          <input required name="name" autoComplete="name" placeholder="Your name" value={form.name} onChange={set('name')} />
-          <input required name="email" type="email" autoComplete="email" placeholder="Your email" value={form.email} onChange={set('email')} />
-          <textarea required name="message" rows={5} placeholder="Tell me about your project…" value={form.message} onChange={set('message')} />
+          <input required name="name" autoComplete="name" placeholder={t.contact.namePlaceholder} value={form.name} onChange={set('name')} />
+          <input required name="email" type="email" autoComplete="email" placeholder={t.contact.emailPlaceholder} value={form.email} onChange={set('email')} />
+          <textarea required name="message" rows={5} placeholder={t.contact.msgPlaceholder} value={form.message} onChange={set('message')} />
           {/* spam trap: invisible to people */}
           <input type="checkbox" name="botcheck" className="hp-field" tabIndex={-1} autoComplete="off" checked={form.botcheck} onChange={set('botcheck')} />
           <button className={`btn-gradient ${status}`} type="submit" disabled={status === 'sending'}>{label}</button>
@@ -87,8 +89,8 @@ export default function Contact() {
           {profile.initials}
           <span className="logo-brace">{'}'}</span>
         </span>
-        <span>© {new Date().getFullYear()} {profile.firstName} {profile.lastName}. Crafted with React.</span>
-        <a href="#home">Back to top ↑</a>
+        <span>© {new Date().getFullYear()} {profile.firstName} {profile.lastName}. {t.contact.footerCrafted}</span>
+        <a href="#home">{t.contact.backToTop}</a>
       </footer>
     </section>
   )

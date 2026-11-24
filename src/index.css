@@ -221,9 +221,90 @@ img { display: block; max-width: 100%; }
 .nav-links a.active::after { transform: scaleX(1); }
 .nav-right { display: flex; align-items: center; gap: 10px; }
 
+/* ── Language Switcher ────────────────────────────────────── */
+.lang-picker-wrap { position: relative; }
+.lang-btn {
+  display: flex !important;
+  align-items: center;
+  gap: 6px;
+  width: auto !important;
+  padding: 0 10px !important;
+  height: 38px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background: color-mix(in srgb, var(--card-solid) 75%, transparent) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+.lang-flag { font-size: 14px; line-height: 1; }
+.lang-code { font-family: var(--mono); color: var(--text); font-size: 11px; }
+.lang-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: color-mix(in srgb, var(--card-solid) 82%, transparent);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 8px;
+  min-width: 170px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  z-index: 100;
+  animation: popIn 0.2s var(--ease);
+  display: grid;
+  gap: 4px;
+}
+.lang-dropdown-title {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  padding: 4px 8px;
+  font-weight: 600;
+}
+.lang-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+  width: 100%;
+  text-align: left;
+}
+.lang-dropdown-item:hover {
+  background: var(--a15);
+  border-color: var(--a30);
+  color: var(--accent);
+}
+.lang-dropdown-item.active {
+  background: var(--a15);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 700;
+}
+.lang-flag-sm { font-size: 16px; line-height: 1; }
+.lang-name { flex: 1; }
+.lang-check { font-weight: 800; font-size: 12px; color: var(--accent); }
+
 /* ── Color Theme Picker ───────────────────────────────────── */
 .color-picker-wrap { position: relative; }
-.color-btn { position: relative; }
+.color-btn {
+  position: relative;
+  background: color-mix(in srgb, var(--card-solid) 75%, transparent) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
 .color-dot-indicator {
   position: absolute;
   top: 5px;
@@ -237,13 +318,14 @@ img { display: block; max-width: 100%; }
   position: absolute;
   top: calc(100% + 10px);
   right: 0;
-  background: var(--card-solid);
-  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card-solid) 82%, transparent);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 14px;
   padding: 12px;
   min-width: 220px;
-  box-shadow: 0 16px 36px var(--shadow);
-  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2);
   z-index: 100;
   animation: popIn 0.2s var(--ease);
 }
@@ -293,22 +375,48 @@ img { display: block; max-width: 100%; }
   box-shadow: 0 0 6px var(--a30);
 }
 
-/* ── Mobile menu theme controls ───────────────────────────── */
-.mobile-theme-section {
+/* ── Mobile menu preferences ──────────────────────────────── */
+.mobile-pref-group {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  margin-bottom: 20px;
   width: 100%;
 }
-.mobile-theme-label {
+.mobile-pref-label {
   font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
   font-weight: 600;
 }
+.mobile-lang-chips {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.mobile-lang-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+.mobile-lang-chip.active {
+  background: var(--a15);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 12px var(--a30);
+}
+
 .mobile-color-chips {
   display: flex;
   gap: 12px;
@@ -401,30 +509,57 @@ img { display: block; max-width: 100%; }
 }
 .hero-socials a:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-3px); }
 
-.hero-stage { position: relative; height: min(70vh, 620px); display: grid; place-items: center; --mx: 0; --my: 0; }
+.hero-stage { position: relative; height: min(78vh, 700px); display: grid; place-items: center; --mx: 0; --my: 0; }
 /* Empty slot — the floating photo (.traveler) is drawn on top of it */
-.hero-portrait-wrap { width: min(380px, 80%); }
-.hero-portrait { width: 100%; aspect-ratio: 3 / 4; }
+.hero-portrait-wrap {
+  width: min(420px, 90%);
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 70px;
+}
+.hero-portrait {
+  width: 100%;
+  aspect-ratio: 1 / 1.35;
+  max-height: 600px;
+}
 
 /* ═══ Floating photo: hero (standing) → skills scene (seated with laptop) ═══ */
 .traveler {
   position: fixed; top: 0; left: 0; z-index: 2; width: 0; height: 0;
-  pointer-events: none; will-change: transform; --float: 1;
+  pointer-events: none; will-change: transform; --float: 0;
   border-radius: 200px 200px 28px 28px;
 }
 .traveler-inner {
   position: relative; width: 100%; height: 100%; border-radius: inherit;
-  transform: perspective(1000px)
-    rotateY(calc(var(--tilt-x, 0) * 7deg * var(--float)))
-    rotateX(calc(var(--tilt-y, 0) * -7deg * var(--float)));
   transition: transform 0.5s var(--ease);
-  animation: tvFloat 7s ease-in-out infinite;
 }
 @keyframes tvFloat { 50% { translate: 0 calc(-12px * var(--float)); } }
-.traveler-clip { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; z-index: 1; background: var(--card-solid); }
-.traveler-clip img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.tv-stand { object-position: 50% 10%; }
-.tv-sit { object-position: 50% 30%; opacity: 0; }
+.traveler-clip {
+  position: absolute; inset: 0; border-radius: inherit; z-index: 1;
+  background: transparent;
+}
+.traveler-card-bg {
+  position: absolute; inset: 0; border-radius: inherit; overflow: hidden;
+  background: radial-gradient(circle at 50% 30%, var(--a30) 0%, rgba(255, 255, 255, 0.04) 60%, transparent 100%), var(--card-solid);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  opacity: 0;
+  pointer-events: none;
+}
+.traveler-clip img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.tv-stand {
+  object-fit: contain !important;
+  object-position: 50% 100% !important;
+  transform: scale(1.05) translateY(-10px);
+  transform-origin: bottom center;
+  filter: drop-shadow(0 25px 45px rgba(0, 0, 0, 0.65));
+}
+.tv-sit { object-fit: cover; object-position: 50% 30%; opacity: 0; border-radius: inherit; }
 .tv-glow { /* laptop screen light on the face */
   position: absolute; inset: 0; opacity: 0; mix-blend-mode: screen; pointer-events: none;
   background: radial-gradient(60% 45% at 50% 78%, var(--accent-2), transparent 70%);
@@ -449,6 +584,7 @@ img { display: block; max-width: 100%; }
   position: absolute; inset: -2px; border-radius: inherit; z-index: 0;
   background: var(--grad);
   box-shadow: 0 0 60px -6px var(--a50), 0 30px 90px -20px var(--b30);
+  opacity: 0;
 }
 .portrait-shine {
   position: absolute; inset: 0; z-index: 2; border-radius: inherit; pointer-events: none;
@@ -855,3 +991,130 @@ img { display: block; max-width: 100%; }
 .form-note.error { color: #f87171; }
 .form-note a { color: var(--accent); text-decoration: underline; }
 .contact-cv { margin-top: 24px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   GLASSMORPHISM ENHANCEMENTS
+   ═══════════════════════════════════════════════════════════════ */
+.bento-card {
+  background: color-mix(in srgb, var(--card-solid) 65%, transparent) !important;
+  backdrop-filter: blur(20px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+}
+.bento-card:hover {
+  border-color: var(--a50) !important;
+  box-shadow: 0 24px 50px -10px var(--a30), inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+}
+
+.desk-info {
+  background: color-mix(in srgb, var(--card-solid) 75%, transparent) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+.contact-form {
+  background: color-mix(in srgb, var(--card-solid) 65%, transparent) !important;
+  backdrop-filter: blur(24px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+.contact-form input,
+.contact-form textarea {
+  background: rgba(255, 255, 255, 0.035) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s !important;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--a30) !important;
+}
+
+.floater {
+  background: color-mix(in srgb, var(--card-solid) 70%, transparent) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.22) !important;
+}
+
+.pill {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px var(--a15);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RIGHT-TO-LEFT (ARABIC) SUPPORT
+   ═══════════════════════════════════════════════════════════════ */
+[dir='rtl'] {
+  direction: rtl;
+  text-align: right;
+  font-family: 'Segoe UI', Tahoma, Arial, var(--font);
+}
+[dir='rtl'] .hero {
+  text-align: right;
+}
+[dir='rtl'] .hero-role {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+[dir='rtl'] .hero-role .line {
+  margin-left: 0;
+  margin-right: 14px;
+}
+[dir='rtl'] .hero-cta {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+[dir='rtl'] .nav-links {
+  direction: rtl;
+}
+[dir='rtl'] .contact-grid {
+  direction: rtl;
+}
+[dir='rtl'] .contact-left {
+  text-align: right;
+}
+[dir='rtl'] .contact-mail,
+[dir='rtl'] .contact-loc {
+  justify-content: flex-start;
+}
+[dir='rtl'] .footer {
+  direction: rtl;
+}
+[dir='rtl'] .color-dropdown,
+[dir='rtl'] .lang-dropdown {
+  right: auto;
+  left: 0;
+}
+[dir='rtl'] .lang-dropdown-item {
+  text-align: right;
+}
+[dir='rtl'] .desk-copy {
+  text-align: right;
+}
+[dir='rtl'] .desk-info {
+  text-align: right;
+}
+[dir='rtl'] .section-head {
+  text-align: right;
+}
+[dir='rtl'] .bento-card {
+  text-align: right;
+}
+[dir='rtl'] .t-quote figcaption {
+  text-align: right;
+  flex-direction: row-reverse;
+}
+[dir='rtl'] .pc-info {
+  text-align: right;
+}
+

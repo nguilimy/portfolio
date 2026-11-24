@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { profile, testimonials } from '../config'
 import { cssVar, hexToRgb } from '../hooks'
+import { useLanguage } from '../LanguageContext'
 
 const bubblePos = [
   { x: 4, y: 18 }, { x: 88, y: 10 }, { x: 2, y: 70 },
@@ -127,14 +128,15 @@ export default function Testimonials() {
     }
   }, [])
 
-  const t = testimonials[active]
+  const tData = testimonials[active]
+  const { t } = useLanguage()
 
   return (
     <section id="testimonials" className="section testimonials">
       <div className="section-head reveal">
-        <span className="eyebrow">— Testimonials</span>
-        <h2 className="section-title grad-text">What Clients Say</h2>
-        <p className="section-sub">Feedback from people I've had the pleasure of working with.</p>
+        <span className="eyebrow">{t.testimonials.eyebrow}</span>
+        <h2 className="section-title grad-text">{t.testimonials.title}</h2>
+        <p className="section-sub">{t.testimonials.sub}</p>
       </div>
 
       <div className="t-stage">
@@ -157,10 +159,10 @@ export default function Testimonials() {
       </div>
 
       <figure className="t-quote" key={active}>
-        <blockquote>“{t.quote}”</blockquote>
+        <blockquote>“{tData.quote}”</blockquote>
         <figcaption>
-          <span className="t-avatar" style={{ background: t.color }}>{t.initials}</span>
-          <span><strong>{t.name}</strong><small>{t.role}</small></span>
+          <span className="t-avatar" style={{ background: tData.color }}>{tData.initials}</span>
+          <span><strong>{tData.name}</strong><small>{tData.role}</small></span>
         </figcaption>
       </figure>
     </section>

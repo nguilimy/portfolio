@@ -20,6 +20,9 @@ export default function AvatarTraveler() {
   const laptop = useRef(null)
   const glow = useRef(null)
   const caption = useRef(null)
+  const ring = useRef(null)
+  const cardBg = useRef(null)
+  const shine = useRef(null)
 
   useEffect(() => {
     let raf = 0
@@ -40,7 +43,7 @@ export default function AvatarTraveler() {
       const w = lerp(a.width, b.width, t)
       const h = lerp(a.height, b.height, t)
       const rBottom = Math.min(28, w * 0.08)
-      const rTop = lerp(w / 2, rBottom, s) // arch → rounded card
+      const rTop = lerp(w / 2, rBottom, s)
 
       const st = el.current.style
       st.transform = `translate3d(${x}px, ${y}px, 0)`
@@ -56,11 +59,17 @@ export default function AvatarTraveler() {
       laptop.current.style.transform = `translate3d(-50%, ${(1 - s) * 70}%, 0) scale(${0.85 + 0.15 * s})`
       glow.current.style.opacity = range(s, 0.5, 1) * 0.5
       caption.current.style.opacity = range(raw, 0.92, 1)
+
+      // The frame, card background, and ring are 0% in Hero (completely frameless)
+      // and only fade in when morphing into the seated card in skills scene
+      if (ring.current) ring.current.style.opacity = s
+      if (cardBg.current) cardBg.current.style.opacity = s
+      if (shine.current) shine.current.style.opacity = s
     }
     const schedule = () => { if (!raf) raf = requestAnimationFrame(update) }
 
     update()
-    const settle = setInterval(update, 120) // follow layout while fonts & reveals settle
+    const settle = setInterval(update, 120)
     const stopSettle = setTimeout(() => clearInterval(settle), 2500)
     window.addEventListener('scroll', schedule, { passive: true })
     window.addEventListener('resize', schedule)
@@ -76,15 +85,16 @@ export default function AvatarTraveler() {
   return (
     <div className="traveler" ref={el} aria-hidden>
       <div className="traveler-inner">
-        <div className="portrait-ring" />
+        <div ref={ring} className="portrait-ring" />
         <div className="traveler-clip">
+          <div ref={cardBg} className="traveler-card-bg" />
           <img ref={stand} className="tv-stand" src={profile.photoStanding} alt="" fetchpriority="high" />
           <img ref={sit} className="tv-sit" src={profile.photo} alt="" />
           <div ref={glow} className="tv-glow" />
-          <div className="portrait-shine" />
+          <div ref={shine} className="portrait-shine" />
         </div>
 
-        {/* Laptop (seen from behind, glowing logo on the lid) */}
+        {/* Laptop */}
         <div ref={laptop} className="tv-laptop">
           <div className="tv-lid">
             <LogoMark size={28} />

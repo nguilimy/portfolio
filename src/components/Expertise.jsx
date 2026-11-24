@@ -1,9 +1,11 @@
 import { expertise } from '../config'
 import { logoFor } from '../logos'
+import { useLanguage } from '../LanguageContext'
 import FeatureIcon from './FeatureIcon'
 import TechIcon, { Tag } from './TechIcon'
 
 export default function Expertise() {
+  const { t } = useLanguage()
   const onMove = (e) => {
     const r = e.currentTarget.getBoundingClientRect()
     e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`)
@@ -13,9 +15,9 @@ export default function Expertise() {
   return (
     <section id="skills" className="section">
       <div className="section-head reveal">
-        <span className="eyebrow">— Expertise</span>
-        <h2 className="section-title grad-text">My Skills</h2>
-        <p className="section-sub">Architecting modern digital experiences with a focus on clean code, scalable infrastructure, and pixel-perfect design.</p>
+        <span className="eyebrow">{t.skills.eyebrow}</span>
+        <h2 className="section-title grad-text">{t.skills.title}</h2>
+        <p className="section-sub">{t.skills.sub}</p>
       </div>
 
       <div className="bento">

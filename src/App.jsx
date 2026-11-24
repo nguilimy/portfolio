@@ -9,6 +9,7 @@ import Projects from './components/Projects'
 import Testimonials from './components/Testimonials'
 import Contact from './components/Contact'
 import AvatarTraveler from './components/AvatarTraveler'
+import { LanguageProvider } from './LanguageContext'
 import { useReveal } from './hooks'
 import { initSmoothScroll } from './smooth'
 import { showTestimonials } from './config'
@@ -36,9 +37,9 @@ export default function App() {
   const [loading, setLoading] = useState(true)
   const done = useCallback(() => setLoading(false), [])
   return (
-    <>
+    <LanguageProvider>
       <Background />
       {loading ? <Loader onDone={done} /> : <Site />}
-    </>
+    </LanguageProvider>
   )
 }

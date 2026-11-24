@@ -23,6 +23,8 @@ export function LanguageProvider({ children }) {
     } catch {}
     document.documentElement.lang = newLang
     document.documentElement.dir = translations[newLang].dir
+    // Immediately notify AvatarTraveler to reposition after layout shift
+    requestAnimationFrame(() => window.dispatchEvent(new Event('resize')))
   }
 
   useEffect(() => {

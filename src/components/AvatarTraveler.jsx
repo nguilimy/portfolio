@@ -73,12 +73,24 @@ export default function AvatarTraveler() {
     const stopSettle = setTimeout(() => clearInterval(settle), 2500)
     window.addEventListener('scroll', schedule, { passive: true })
     window.addEventListener('resize', schedule)
+
+    // Reposition immediately on any layout shift (e.g. language switch changes text width/direction)
+    const ro = new ResizeObserver(schedule)
+    const slotA = document.getElementById('avatar-slot-hero')
+    const slotB = document.getElementById('avatar-slot-skills')
+    if (slotA) ro.observe(slotA)
+    if (slotB) ro.observe(slotB)
+    // Also watch the hero section itself for size/position changes
+    const heroEl = document.getElementById('home')
+    if (heroEl) ro.observe(heroEl)
+
     return () => {
       cancelAnimationFrame(raf)
       clearInterval(settle)
       clearTimeout(stopSettle)
       window.removeEventListener('scroll', schedule)
       window.removeEventListener('resize', schedule)
+      ro.disconnect()
     }
   }, [])
 

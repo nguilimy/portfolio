@@ -1131,3 +1131,41 @@ img { display: block; max-width: 100%; }
   transform-origin: right;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE & TOUCH PERFORMANCE (Android & iPhone smooth scrolling)
+   Placed last so it overrides heavy blur filters during scroll
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 768px), (pointer: coarse) {
+  html, body {
+    touch-action: pan-y;
+  }
+  .bento-card,
+  .desk-info,
+  .contact-form,
+  .contact-form input,
+  .contact-form textarea,
+  .floater,
+  .pill,
+  .traveler-card-bg {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: color-mix(in srgb, var(--card-solid) 90%, transparent) !important;
+  }
+  .nav,
+  .color-dropdown,
+  .lang-dropdown {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+  .tv-stand {
+    filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.45));
+  }
+  .floater .tech-logo {
+    filter: none;
+  }
+  .bento-card,
+  .project-panel {
+    contain: layout style paint;
+  }
+}
+

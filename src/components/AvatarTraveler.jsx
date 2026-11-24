@@ -46,12 +46,15 @@ export default function AvatarTraveler() {
       const rTop = lerp(w / 2, rBottom, s)
 
       const st = el.current.style
+      const isVisible = y + h > -40 && y < window.innerHeight + 40
+      st.visibility = isVisible ? 'visible' : 'hidden'
+      if (!isVisible) return
+
       st.transform = `translate3d(${x}px, ${y}px, 0)`
       st.width = `${w}px`
       st.height = `${h}px`
       st.borderRadius = `${rTop}px ${rTop}px ${rBottom}px ${rBottom}px`
       st.setProperty('--float', (1 - raw).toFixed(3))
-      st.visibility = y + h > -40 && y < window.innerHeight + 40 ? 'visible' : 'hidden'
 
       stand.current.style.opacity = 1 - s
       sit.current.style.opacity = s

@@ -30,6 +30,15 @@
         var t = localStorage.getItem('theme')
         if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
         document.documentElement.dataset.theme = t
+
+        var c = localStorage.getItem('portfolio-color-theme')
+        if (c) {
+          var parsed = JSON.parse(c)
+          if (parsed && parsed.accent && parsed.accent2) {
+            document.documentElement.style.setProperty('--accent', parsed.accent)
+            document.documentElement.style.setProperty('--accent-2', parsed.accent2)
+          }
+        }
       } catch (e) {}
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -2,7 +2,7 @@
 //  EDIT THIS FILE to personalise the whole portfolio.
 // ─────────────────────────────────────────────────────────────
 import photo from './assets/me.jpg' // seated photo (skills scene, desk monitor)
-import photoStanding from './assets/photo.jpg' // standing photo (hero)
+import photoStanding from './assets/HMD.jpg' // standing photo (hero)
 
 // 🎨 THEME COLOURS — change these two values to recolour the whole site
 // (buttons, gradients, glows, highlights, particles…). Works in dark & light mode.

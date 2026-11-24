@@ -75,14 +75,25 @@
 
 /* ═══ Base ═══════════════════════════════════════════════════════ */
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
+  max-width: 100%;
+  overscroll-behavior-x: none;
+}
 body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
+  max-width: 100%;
+  overscroll-behavior-x: none;
   -webkit-tap-highlight-color: transparent;
+}
+main {
+  overflow-x: clip;
+  max-width: 100%;
 }
 body.menu-open { overflow: hidden; }
 a { color: inherit; text-decoration: none; }
@@ -1138,6 +1149,11 @@ img { display: block; max-width: 100%; }
 @media (max-width: 768px), (pointer: coarse) {
   html, body {
     touch-action: pan-y;
+    overflow-x: clip;
+    overscroll-behavior-x: none;
+  }
+  .hero, .section, .nav {
+    max-width: 100%;
   }
   .bento-card,
   .desk-info,
